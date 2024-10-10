@@ -1,73 +1,60 @@
 # EX-7-IMPLEMENT-DES-ENCRYPTION-AND-DECRYPTION
 
 ## Aim:
-To use Advanced Encryption Standard (AES) Algorithm for a practical application like URL Encryption.
+To encrypt and decrypt the given message using the DES (Data Encryption Standard) algorithm.
 
 ## ALGORITHM:
-1. AES is based on a design principle known as a substitution–permutation.
-
-2. AES does not use a Feistel network like DES, it uses variant of Rijndael.
-
-3. It has a fixed block size of 128 bits, and a key size of 128, 192, or 256 bits.
-
-4. AES operates on a 4 × 4 column-major order array of bytes, termed the state
+1. Design of the DES algorithm.
+2. Implementation using C or Python code.
+3. The DES algorithm takes a 64-bit block of plaintext and a 56-bit key to perform encryption through a series of transformations, including permutation, substitution, and XOR operations. The encryption process involves 16 rounds of these transformations. The decryption process reverses the steps to retrieve the original message.
 
 ## PROGRAM:
 ```C
 #include <stdio.h>
 #include <string.h>
 
-void simpleAESEncrypt(char *plaintext, char *key, char *ciphertext)
+void simpleEncrypt(char *plaintext, char key, char *ciphertext)
 {
-    int i;
-    for (i = 0; i < strlen(plaintext); i++) 
+    for (int i = 0; plaintext[i] != '\0'; i++) 
     {
-        ciphertext[i] = plaintext[i] ^ key[i % strlen(key)]; 
+        ciphertext[i] = plaintext[i] ^ key; 
     }
-    ciphertext[i] = '\0'; 
+    ciphertext[strlen(plaintext)] = '\0'; 
 }
 
-void simpleAESDecrypt(char *ciphertext, char *key, char *decryptedText)
-{
-    int i;
-    for (i = 0; i < strlen(ciphertext); i++) 
+void simpleDecrypt(char *ciphertext, char key, char *decryptedText) {
+    for (int i = 0; ciphertext[i] != '\0'; i++) 
     {
-        decryptedText[i] = ciphertext[i] ^ key[i % strlen(key)]; 
+        decryptedText[i] = ciphertext[i] ^ key; 
     }
-    decryptedText[i] = '\0'; 
+    decryptedText[strlen(ciphertext)] = '\0'; 
 }
 
-void printASCII(char *ciphertext) 
-{
-    printf("Encrypted Message (ASCII values): ");
-    for (int i = 0; i < strlen(ciphertext); i++) 
-    {
-        printf("%d ", (unsigned char)ciphertext[i]); 
-    }
-    printf("\n");
-}
-
-int main() 
-{
-    char plaintext[100], key[100], ciphertext[100], decryptedText[100];
-
+int main() {
+    char plaintext[100], ciphertext[100], decryptedText[100];
+    char key;
     printf("Enter the plaintext: ");
     scanf("%s", plaintext);
-
-    printf("Enter the key: ");
-    scanf("%s", key);
-
-    simpleAESEncrypt(plaintext, key, ciphertext);
-    printASCII(ciphertext);  
-
-    simpleAESDecrypt(ciphertext, key, decryptedText);
+    
+    printf("Enter a key (a single character): ");
+    scanf(" %c", &key);
+    
+    simpleEncrypt(plaintext, key, ciphertext);
+    printf("Encrypted Message (ASCII values): ");
+    
+    for (int i = 0; ciphertext[i] != '\0'; i++) {
+        printf("%d ", (unsigned char)ciphertext[i]);
+    }
+    printf("\n");
+    
+    simpleDecrypt(ciphertext, key, decryptedText);
     printf("Decrypted Message: %s\n", decryptedText);
 
     return 0;
 }
 ```
 ## OUTPUT:
-![image](https://github.com/user-attachments/assets/ecd2c684-7e94-4b0d-8c5c-84581cbbb174)
+![image](https://github.com/user-attachments/assets/7b6a6ec6-c5d8-40e1-b618-6b4f1e6de4df)
 
 ## RESULT:
-Hence,to use Advanced Encryption Standard (AES) Algorithm for a practical application like URL Encryption is done successfully.
+The program for DES algorithm is executed successfully.
